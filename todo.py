@@ -15,7 +15,10 @@ def get_todos():
 @app.route("/todo/", methods=['POST'])
 def create_todo():
     todo = request.get_json()
-    todos[len(todos)] = todo
+    if len(todos) not in todos:
+        todos[len(todos)] = todo['name']
+    else:
+        todos[len(todos) + 1] = todo['name']
     return jsonify(todo=todos)
 
 @app.route("/todo/<int:id>")
@@ -26,7 +29,7 @@ def read_todo(id):
 @app.route("/todo/<int:id>", methods=['PUT'])
 def update_todo(id):
     todo = request.get_json()
-    todos[id] = todo
+    todos[id] = todo['name']
     return jsonify(todo=todos)
 
 @app.route("/todo/<int:id>", methods=['DELETE'])
