@@ -15,10 +15,10 @@ def get_todos():
 @app.route("/todo/", methods=['POST'])
 def create_todo():
     todo = request.get_json()
-    if len(todos) not in todos:
-        todos[len(todos)] = todo['name']
+    if len(todos) == 0:
+        todos[0] = todo['name']
     else:
-        todos[len(todos) + 1] = todo['name']
+        todos[max(todos.keys()) + 1] = todo['name']
     return jsonify(todo=todos)
 
 @app.route("/todo/<int:id>")
